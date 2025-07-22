@@ -42,7 +42,7 @@ __containers__ = Containers(
             depends_on=[
                 Container(container=PostgresSQL),
                 Container(container=RedisContainer),
-                Container(container=RabbitMQContainer)
+                Container(container=RabbitMQContainer),
             ],
         ),
     ],

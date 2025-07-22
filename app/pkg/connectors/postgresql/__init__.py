@@ -1,9 +1,9 @@
 """Container with PostgreSQL connector using SQLAlchemy async."""
 
 from dependency_injector import containers, providers
+from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
 from app.pkg.connectors.postgresql.resource import Postgresql
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from app.pkg.settings import settings
 
 __all__ = ["PostgresSQL"]
@@ -31,7 +31,8 @@ class PostgresSQL(containers.DeclarativeContainer):
 
 
 class TestPostgresSQL(containers.DeclarativeContainer):
-    """Declarative container with test async SQLAlchemy PostgreSQL connector."""
+    """Declarative container with test async SQLAlchemy PostgreSQL
+    connector."""
 
     configuration = providers.Configuration(name="settings")
     configuration.from_dict(settings.model_dump())

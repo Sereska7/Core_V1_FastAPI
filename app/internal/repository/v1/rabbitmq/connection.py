@@ -38,6 +38,7 @@ async def get_connection(
     Returns:
         Async connection to rabbitmq.
     """
+
     if not isinstance(pool, aio_pika.pool.Pool):
         pool = await pool
 
@@ -77,6 +78,7 @@ async def acquire_connection(
     Returns:
         Async connection to rabbitmq.
     """
+
     async with pool.acquire() as conn:
         channel = await conn.channel()
         yield channel

@@ -18,6 +18,7 @@ logger = get_logger(__name__)
 
 def __convert_to_model(model_class: Type[BaseModel], data: dict) -> BaseModel:
     """Convert a dictionary to an instance of the model class."""
+
     return model_class(**data)
 
 
@@ -37,7 +38,8 @@ def insert_changelog(
     Args:
         repository: repository class to be injected.
 
-    Returns: Inner decorator.
+    Returns:
+        Inner decorator.
     """
 
     def insert_changelog_inner(

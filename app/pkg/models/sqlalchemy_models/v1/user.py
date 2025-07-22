@@ -1,10 +1,11 @@
-"""SQlAlchemy model for user"""
+"""SQlAlchemy model for user."""
 
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
-from uuid import UUID as UUIDType
 from typing import Optional
+from uuid import UUID as UUIDType
+
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.pkg.models.sqlalchemy_models import Base
 

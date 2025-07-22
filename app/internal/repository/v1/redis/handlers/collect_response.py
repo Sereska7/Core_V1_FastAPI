@@ -3,16 +3,7 @@
 import json
 from functools import wraps
 from types import NoneType
-from typing import (
-    Any,
-    Callable,
-    List,
-    Optional,
-    Type,
-    Union,
-    get_args,
-    get_origin,
-)
+from typing import Any, Callable, List, Optional, Type, Union, get_args, get_origin
 
 from pydantic import TypeAdapter
 
@@ -74,7 +65,7 @@ async def process_response(
     fn: Callable,
     response: Any,
     *args: object,
-    **kwargs: object
+    **kwargs: object,
 ) -> Union[List[Type[Model]], Type[Model], None]:
     """Process the response and convert it to the appropriate model.
 
@@ -85,6 +76,7 @@ async def process_response(
     Returns:
         The processed response in the form of the model.
     """
+
     return_annotation = kwargs.get("result_model")
     if return_annotation is None or return_annotation is NoneType:
         return None
@@ -120,6 +112,7 @@ def __is_optional_type(origin) -> bool:
 
     Returns: True if the type is Optional or Union, False otherwise.
     """
+
     return origin in (
         Optional,
         Union,
@@ -144,7 +137,9 @@ async def __convert_response(response: bytes | bytearray, annotations: str):
     decoded = response.decode("utf-8")
     response = json.loads(decoded)
 
-    if isinstance(response, list) or annotations.replace("typing.", "").startswith("List"):
+    if isinstance(response, list) or annotations.replace("typing.", "").startswith(
+        "List",
+    ):
         return [await __convert_memory_viewer(item) for item in response]
 
     return await __convert_memory_viewer(response)

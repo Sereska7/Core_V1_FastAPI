@@ -5,18 +5,13 @@ from logging import Logger
 from app.internal.repository.v1.postgresql.user import UserRepository
 from app.pkg.logger import get_logger
 from app.pkg.models import v1 as models
-from app.pkg.models.v1.exceptions.repository import (
-    DriverError,
-    EmptyResult,
-    UniqueViolation,
-)
+from app.pkg.models.v1.exceptions.repository import DriverError
 
 __all__ = ["UserService"]
 
 
 class UserService:
-    """
-    """
+    """"""
 
     user_repository: UserRepository
     __logger: Logger = get_logger(__name__)
@@ -31,6 +26,7 @@ class UserService:
         Returns:
             list[models.Folder]: A list of folder models that match the query.
         """
+
         try:
             return await self.user_repository.read()
         except DriverError as exc:

@@ -12,25 +12,25 @@ from app.pkg.settings import settings
 def create_app() -> FastAPI:
     """Create ``FastAPI`` application.
 
-        :func:`.create_app` is a global point of your application.
-        In :func:`.create_app` you can add all your middlewares, routes, dependencies, etc.
-        required for global server startup.
+    :func:`.create_app` is a global point of your application.
+    In :func:`.create_app` you can add all your middlewares, routes, dependencies, etc.
+    required for global server startup.
 
-        Examples:
-            For start building your application, you should provide to uvicorn this point of
-            your application::
+    Examples:
+        For start building your application, you should provide to uvicorn this point of
+        your application::
 
-                $ uvicorn app:create_app --reload
+            $ uvicorn app:create_app --reload
 
-            When you need to connect TOKEN-based auth strategy, you can add dependency to
-            ``FastAPI`` instance::
+        When you need to connect TOKEN-based auth strategy, you can add dependency to
+        ``FastAPI`` instance::
 
-                >>> from fastapi import FastAPI, Depends
-                >>> from app.internal.pkg.middlewares.token_based_verification import (
-                ...     token_based_verification
-                ... )
-                >>> app = FastAPI(dependencies=[Depends(token_based_verification)])
-        """
+            >>> from fastapi import FastAPI, Depends
+            >>> from app.internal.pkg.middlewares.token_based_verification import (
+            ...     token_based_verification
+            ... )
+            >>> app = FastAPI(dependencies=[Depends(token_based_verification)])
+    """
     if not settings.API.DEBUG_MODE:
         fastapi_kwargs = {
             "dependencies": [Depends(token_based_verification)],
@@ -43,6 +43,6 @@ def create_app() -> FastAPI:
             "dependencies": [Depends(token_based_verification)],
             "root_path": "/root_path",
         }
-    app = FastAPI(lifespan= lifespan, **fastapi_kwargs)
+    app = FastAPI(lifespan=lifespan, **fastapi_kwargs)
     __containers__.wire_packages(app=app)
     return Server(app).get_app()

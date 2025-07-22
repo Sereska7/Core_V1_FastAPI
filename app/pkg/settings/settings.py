@@ -6,7 +6,7 @@ from functools import lru_cache
 from typing import Literal
 
 from dotenv import find_dotenv
-from pydantic import AmqpDsn, AnyUrl, PostgresDsn, RedisDsn, model_validator
+from pydantic import AmqpDsn, PostgresDsn, RedisDsn, model_validator
 from pydantic.types import PositiveInt, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -97,7 +97,7 @@ class Postgresql(_Settings):
                 host=data.get("HOST"),
                 port=int(data.get("PORT")),
                 path=f"{data.get('DATABASE_NAME')}",
-            )
+            ),
         )
 
         data["TEST_DSN"] = str(
@@ -108,7 +108,7 @@ class Postgresql(_Settings):
                 host=data.get("HOST"),
                 port=int(data.get("PORT")),
                 path=f"test_{data.get('DATABASE_NAME')}",
-            )
+            ),
         )
 
         return data
@@ -240,8 +240,6 @@ class Settings(_Settings):
     CLIENTS: Clients | None = None
 
 
-# TODO: Возможно даже lru_cache не стоит использовать. Стоит использовать meta sigleton.
-#   Для класса настроек. А инициализацию перенести в `def __init__`
 @lru_cache
 def get_settings(env_file: str = ".env") -> Settings:
     """Create settings instance."""

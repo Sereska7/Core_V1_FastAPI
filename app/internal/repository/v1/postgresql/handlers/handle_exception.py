@@ -1,21 +1,25 @@
 """Handle Postgresql Query Exceptions."""
 
 from typing import Any, Callable, Coroutine
+
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+
 from app.pkg.logger import get_logger
 from app.pkg.models.base import Model
 from app.pkg.models.v1.exceptions.repository import DriverError, UniqueViolation
 
 logger = get_logger(__name__)
 
-def handle_exception(func: Callable[..., Model]) -> Callable[[tuple[object, ...], dict[str, object]], Coroutine[Any, Any, Model]]:
+
+def handle_exception(
+    func: Callable[..., Model],
+) -> Callable[[tuple[object, ...], dict[str, object]], Coroutine[Any, Any, Model]]:
     """Decorator catching SQLAlchemy async exceptions."""
 
     async def wrapper(*args: object, **kwargs: object) -> Model:
         try:
             return await func(*args, **kwargs)
         except IntegrityError as error:
-            # Пример: проверка на нарушение уникального ограничения
             if "unique constraint" in str(error).lower():
                 logger.exception(f"Unique constraint violation: {error}")
                 raise UniqueViolation from error

@@ -69,7 +69,8 @@ class JsonFormatter(logging.Formatter):
         }
 
     def format(self, record: logging.LogRecord) -> str:
-        """Format the log record as a JSON string, with color coding based on log level.
+        """Format the log record as a JSON string, with color coding based on
+        log level.
 
         Args:
             record (logging.LogRecord): The log record to format.
@@ -99,7 +100,9 @@ class JsonFormatter(logging.Formatter):
 
         if settings.API.ENVIROMENT == "dev":
             colored_message = (
-                color + json.dumps(message_dict, default=str, indent=4) + Style.RESET_ALL
+                color
+                + json.dumps(message_dict, default=str, indent=4)
+                + Style.RESET_ALL
             )
         else:
             colored_message = (
@@ -110,9 +113,7 @@ class JsonFormatter(logging.Formatter):
 
 
 class NestedExtraLogger(logging.Logger):
-    """Logger that contain extra data dict in record
-    in "extra" attribute.
-    """
+    """Logger that contain extra data dict in record in "extra" attribute."""
 
     def makeRecord(
         self,
@@ -128,7 +129,18 @@ class NestedExtraLogger(logging.Logger):
         sinfo=None,
     ):
         extra = {"extra": extra or {}}
-        return super().makeRecord(name, level, fn, lno, msg, args, exc_info, func, extra, sinfo)
+        return super().makeRecord(
+            name,
+            level,
+            fn,
+            lno,
+            msg,
+            args,
+            exc_info,
+            func,
+            extra,
+            sinfo,
+        )
 
 
 logging.setLoggerClass(NestedExtraLogger)

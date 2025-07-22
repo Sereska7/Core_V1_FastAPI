@@ -28,7 +28,6 @@ class Services(containers.DeclarativeContainer):
 
     clients: Clients = providers.Container(Clients)
 
-
     user_service = providers.Factory(UserService)
     user_service.add_attributes(
         user_repository=postgres_repositories.user_repository,

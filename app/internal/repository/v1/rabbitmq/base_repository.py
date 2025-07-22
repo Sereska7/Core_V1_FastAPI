@@ -2,7 +2,6 @@
 
 import json
 from typing import Any
-
 import aio_pika
 
 from app.internal.repository.v1.rabbitmq.connection import get_connection
@@ -27,6 +26,7 @@ class BaseRepository:
         Returns:
             Any: The message that was sent.
         """
+
         async with get_connection() as channel:
             await channel.default_exchange.publish(
                 aio_pika.Message(
@@ -43,6 +43,7 @@ class BaseRepository:
         Args:
             routing_key (str): The routing key (queue name) to listen to.
         """
+
         async with get_connection() as channel:
             if not isinstance(channel, aio_pika.Channel):
                 raise TypeError("Expected aio_pika.Channel, but got something else.")

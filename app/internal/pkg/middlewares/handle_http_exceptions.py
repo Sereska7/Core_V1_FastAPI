@@ -1,4 +1,5 @@
-"""Handlers that handle internal error raise and returns ``http json`` response.
+"""Handlers that handle internal error raise and returns ``http json``
+response.
 
 Examples:
     For example, if in some level in code you raise error inherited by
@@ -53,26 +54,27 @@ def handle_drivers_exceptions(request: Request, exc: DriverError) -> JSONRespons
 
     request_id = getattr(request.state, "request_id", None)
     log_data = {
-        "type":       "Driver Error",
+        "type": "Driver Error",
         "request_id": str(request_id),
-        "method":     request.method,
-        "path":       request.url.path,
-        "headers":    dict(request.headers),
-        "error":      str(exc),
+        "method": request.method,
+        "path": request.url.path,
+        "headers": dict(request.headers),
+        "error": str(exc),
     }
     logger.error("Driver error occurred.", extra={"context": log_data})
     return JSONResponse(
         status_code=500,
         content={
-            "error":      "Driver error occurred.",
-            "details":    str(exc),
+            "error": "Driver error occurred.",
+            "details": str(exc),
             "request_id": str(request_id),
         },
     )
 
 
 def handle_api_exceptions(request: Request, exc: BaseAPIException):
-    """Handle all internal exceptions that inherited from :class:`.BaseAPIException`.
+    """Handle all internal exceptions that inherited from
+    :class:`.BaseAPIException`.
 
     Args:
         request:

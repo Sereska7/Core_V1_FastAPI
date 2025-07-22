@@ -7,8 +7,8 @@ from app.internal.repository.v1.postgresql.connection import get_connection
 from app.internal.repository.v1.postgresql.handlers.collect_response import (
     collect_response,
 )
-from app.pkg.models.sqlalchemy_models import User
 from app.pkg.models import v1 as models
+from app.pkg.models.sqlalchemy_models import User
 
 __all__ = ["UserRepository"]
 

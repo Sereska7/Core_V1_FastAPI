@@ -155,6 +155,7 @@ class BaseClient:
         Returns:
             httpx.Response: Response from API.
         """
+
         http_status = response.status_code
 
         if response.is_success:

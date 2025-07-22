@@ -1,9 +1,10 @@
 """Create connection to postgresql."""
 
 from contextlib import asynccontextmanager
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, AsyncEngine
-from dependency_injector.wiring import inject, Provide
 from typing import AsyncGenerator, Union
+
+from dependency_injector.wiring import Provide, inject
+from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker
 
 from app.pkg.connectors import Connectors
 
@@ -13,7 +14,9 @@ __all__ = ["get_connection"]
 @asynccontextmanager
 @inject
 async def get_connection(
-    session_factory: async_sessionmaker[AsyncSession] = Provide[Connectors.postgresql.session_factory],
+    session_factory: async_sessionmaker[AsyncSession] = Provide[
+        Connectors.postgresql.session_factory
+    ],
     return_engine: bool = False,
     engine: AsyncEngine = Provide[Connectors.postgresql.engine],
 ) -> AsyncGenerator[Union[AsyncSession, AsyncEngine], None]:
@@ -36,6 +39,7 @@ async def get_connection(
     Yields:
         AsyncSession or AsyncEngine
     """
+
     if return_engine:
         yield engine
         return

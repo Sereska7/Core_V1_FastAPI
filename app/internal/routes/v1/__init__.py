@@ -9,9 +9,7 @@ router = APIRouter(
 )
 
 routes = sorted(
-    [
-        user_router
-    ],
+    [user_router],
     key=lambda r: r.prefix,
 )
 

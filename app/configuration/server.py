@@ -26,8 +26,8 @@ class Server:
     __app: FastAPI
 
     def __init__(self, app: FastAPI):
-        """Initialize server instance. Register all requirements for the correct work of
-        server instance.
+        """Initialize server instance. Register all requirements for the
+        correct work of server instance.
 
         Args:
             app:

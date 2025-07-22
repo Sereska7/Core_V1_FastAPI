@@ -1,9 +1,7 @@
 """Routes for User module."""
 
-from uuid import UUID
-
 from dependency_injector.wiring import Provide, inject
-from fastapi import APIRouter, Depends, Path, Query, status
+from fastapi import APIRouter, Depends, status
 
 from app.internal.services import Services
 from app.internal.services.v1 import UserService
